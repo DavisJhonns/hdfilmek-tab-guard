@@ -1,0 +1,833 @@
+
+/* #region Theme */
+
+/**
+ * Global design tokens.
+ *
+ * Defines the color palette, border styles, spacing,
+ * border radii, and transition timing used throughout
+ * the popup interface.
+ *
+ * color-scheme:
+ *   Informs the browser that the interface uses
+ *   a dark color scheme.
+ *
+ * Color variables:
+ *   Define the background, surfaces, text, and
+ *   accent colors used by individual components.
+ *
+ * Radius variables:
+ *   Provide consistent corner rounding.
+ *
+ * Transition:
+ *   Defines the default animation timing.
+ */
+
+:root {
+    color-scheme: dark;
+
+    --background: #080a08;
+    --surface: #111511;
+    --surface-light: #191f19;
+
+    --border: rgba(163, 230, 53, 0.12);
+
+    --text: #f4f7f0;
+    --muted: #899387;
+
+    --lime: #a3e635;
+    --lime-dark: #65a30d;
+
+    --red: #ef4444;
+    --red-dark: #991b1b;
+
+    --purple: #a78bfa;
+    --purple-dark: #7c3aed;
+    --purple-bg: rgba(167, 139, 250, 0.12);
+
+    --radius-sm: 6px;
+    --radius-md: 11px;
+    --radius-lg: 14px;
+
+    --transition: 0.2s ease;
+}
+
+/* #endregion */
+
+/* #region Reset */
+
+/**
+ * Applies consistent box sizing and removes
+ * default browser spacing from all elements.
+ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/**
+ * Defines the popup's overall dimensions,
+ * background, text color, and system font stack.
+ */
+
+body {
+    width: 360px;
+    min-height: 440px;
+
+    background: var(--background);
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+/**
+ * Main popup container.
+ *
+ * Provides consistent spacing between the
+ * popup content and its outer boundaries.
+ */
+
+.container {
+    padding: 22px;
+}
+
+/* #endregion */
+
+/* #region Header */
+
+/**
+ * Main header layout.
+ *
+ * Aligns the branding and version information
+ * horizontally and distributes available space.
+ */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+/**
+ * Groups the brand icon and brand text.
+ */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/**
+ * Brand icon container.
+ *
+ * Uses the lime accent color and a subtle
+ * background to establish the extension identity.
+ */
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    color: var(--lime);
+    background: rgba(163, 230, 53, 0.09);
+
+    border: 1px solid rgba(163, 230, 53, 0.25);
+}
+
+/**
+ * Standardizes the dimensions of images
+ * and SVG icons inside the brand container.
+ */
+
+.brand-icon img,
+.brand-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+/**
+ * Main extension title.
+ */
+
+.brand-text h1 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+/**
+ * Secondary branding text.
+ */
+
+.brand-text span {
+    display: block;
+    margin-top: 3px;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/**
+ * Extension version badge.
+ *
+ * Displays version information using
+ * a subtle border and muted text.
+ */
+
+.version {
+    padding: 5px 8px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* #endregion */
+
+/* #region Status Card */
+
+/**
+ * Main protection status container.
+ *
+ * Uses a subtle gradient and lime accent
+ * to represent the default protection state.
+ *
+ * The card supports three visual states:
+ *
+ * active:
+ *   Protection is enabled and the window
+ *   contains a fully loaded protected page.
+ *
+ * inactive:
+ *   Protection is disabled or waiting
+ *   for a protected page to load.
+ *
+ * loading:
+ *   Temporarily reduces opacity while
+ *   status information is being refreshed.
+ */
+
+.status-card {
+    padding: 17px;
+    margin-bottom: 24px;
+
+    border: 1px solid rgba(163, 230, 53, 0.25);
+    border-radius: var(--radius-lg);
+
+    background: linear-gradient(
+        135deg,
+        rgba(101, 163, 13, 0.16),
+        var(--surface)
+    );
+
+    transition: var(--transition);
+}
+
+/**
+ * Active protection state.
+ *
+ * Highlights the card with a stronger
+ * lime-colored border.
+ */
+
+.status-card.active {
+    border-color: rgba(163, 230, 53, 0.35);
+}
+
+/**
+ * Inactive protection state.
+ *
+ * Switches the accent color to red and
+ * applies a darker warning-style gradient.
+ */
+
+.status-card.inactive {
+    border-color: rgba(239, 68, 68, 0.35);
+
+    background: linear-gradient(
+        135deg,
+        rgba(153, 27, 27, 0.17),
+        var(--surface)
+    );
+}
+
+/**
+ * Loading state.
+ *
+ * Reduces the card's opacity to indicate
+ * temporary status retrieval.
+ */
+
+.status-card.loading {
+    opacity: 0.75;
+}
+
+/**
+ * Status indicator layout.
+ *
+ * Positions the status label and its
+ * corresponding visual indicator horizontally.
+ */
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: var(--lime);
+    font-size: 11px;
+}
+
+/**
+ * Changes the status label color when
+ * protection is inactive.
+ */
+
+.status-card.inactive .status-indicator {
+    color: var(--red);
+}
+
+/**
+ * Small circular status indicator.
+ *
+ * Uses a lime background and glow to
+ * visually represent active protection.
+ */
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--lime);
+    box-shadow: 0 0 10px rgba(163, 230, 53, 0.6);
+}
+
+/**
+ * Changes the indicator to red when
+ * the status card is inactive.
+ */
+
+.status-card.inactive .status-dot {
+    background: var(--red);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+/**
+ * Main protection status heading.
+ */
+
+.status-card h2 {
+    margin-top: 13px;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+/**
+ * Additional protection status description.
+ */
+
+.status-card p {
+    margin-top: 5px;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* #endregion */
+
+/* #region Sections */
+
+/**
+ * General spacing for the settings section.
+ */
+
+.settings-section {
+    margin-bottom: 23px;
+}
+
+/**
+ * Settings section heading.
+ *
+ * Positions the section title and optional
+ * caption horizontally.
+ */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 13px;
+}
+
+/**
+ * Main section title typography.
+ */
+
+.section-heading h3 {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/**
+ * Secondary section caption.
+ *
+ * Uses muted text and increased letter spacing
+ * to distinguish supplementary information.
+ */
+
+.section-caption {
+    color: #66715f;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+/* #endregion */
+
+/* #region Setting Rows */
+
+/**
+ * Individual settings container.
+ *
+ * Positions the setting information and
+ * corresponding toggle control horizontally.
+ *
+ * Uses the shared surface and border variables
+ * to maintain visual consistency.
+ */
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 13px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+/**
+ * Groups the setting icon and descriptive text.
+ */
+
+.setting-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+/**
+ * Setting icon container.
+ *
+ * Provides consistent dimensions and
+ * alignment for setting-related icons.
+ */
+
+.setting-icon {
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+}
+
+/**
+ * Standardizes SVG and image dimensions
+ * inside setting icon containers.
+ */
+
+.setting-icon svg,
+.setting-icon img {
+    width: 19px;
+    height: 19px;
+}
+
+/**
+ * Protection setting icon.
+ *
+ * Uses the lime accent to represent
+ * the main tab protection functionality.
+ */
+
+.setting-icon.shield {
+    color: var(--lime);
+    background: rgba(163, 230, 53, 0.1);
+}
+
+/**
+ * Debug setting icon.
+ *
+ * Uses purple to distinguish diagnostic
+ * settings from protection settings.
+ */
+
+.setting-icon.debug {
+    color: var(--purple);
+    background: var(--purple-bg);
+}
+
+/**
+ * Setting title typography.
+ */
+
+.setting-info h4 {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/**
+ * Supplementary setting description.
+ */
+
+.setting-info p {
+    margin-top: 4px;
+
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* #endregion */
+
+/* #region Toggle Switches */
+
+/**
+ * Custom checkbox switch container.
+ *
+ * Provides the dimensions and positioning
+ * required for the custom toggle appearance.
+ */
+
+.switch {
+    position: relative;
+
+    width: 39px;
+    height: 22px;
+
+    flex-shrink: 0;
+}
+
+/**
+ * Hides the default checkbox appearance.
+ *
+ * The actual checkbox remains available
+ * for interaction and keyboard accessibility.
+ */
+
+.switch input {
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+}
+
+/**
+ * Toggle track.
+ *
+ * Uses absolute positioning to cover
+ * the entire switch container.
+ *
+ * Its background changes depending on
+ * the checkbox's checked state.
+ */
+
+.slider {
+    position: absolute;
+    inset: 0;
+
+    border-radius: 20px;
+
+    background: #3b4539;
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+/**
+ * Toggle handle.
+ *
+ * Creates the circular white element
+ * that moves when the switch is activated.
+ */
+
+.slider::before {
+    content: "";
+
+    position: absolute;
+    top: 3px;
+    left: 3px;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #fff;
+
+    transition: var(--transition);
+}
+
+/* Protection switch */
+
+/**
+ * Changes the protection switch track
+ * to lime when its checkbox is checked.
+ */
+
+.switch input:checked + .slider {
+    background: var(--lime-dark);
+}
+
+/**
+ * Moves the protection switch handle
+ * to the right when activated.
+ */
+
+.switch input:checked + .slider::before {
+    transform: translateX(17px);
+}
+
+/* Debug switch */
+
+/**
+ * Uses purple instead of lime for the
+ * active debug switch to distinguish it
+ * from the main protection control.
+ */
+
+.debug-switch input:checked + .slider {
+    background: var(--purple-dark);
+}
+
+/**
+ * Applies a purple keyboard focus outline
+ * to the debug switch.
+ */
+
+.debug-switch input:focus-visible + .slider {
+    outline-color: var(--purple);
+}
+
+/* Disabled state */
+
+/**
+ * Indicates that a switch is temporarily
+ * unavailable, for example while a setting
+ * is being saved.
+ */
+
+.switch input:disabled + .slider {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+/* Keyboard accessibility */
+
+/**
+ * Provides a visible focus indicator
+ * when navigating switches using a keyboard.
+ */
+
+.switch input:focus-visible + .slider {
+    outline: 2px solid var(--lime);
+    outline-offset: 3px;
+}
+
+/* #endregion */
+
+/* #region Domain Card */
+
+/**
+ * Protected domain information container.
+ *
+ * Displays the configured domain using
+ * the shared surface and border styling.
+ */
+
+.domain-card {
+    padding: 14px;
+    margin-top: 3px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+}
+
+/**
+ * Domain heading layout.
+ *
+ * Positions the domain label and
+ * domain badge on opposite sides.
+ */
+
+.domain-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/**
+ * Domain classification badge.
+ *
+ * Uses the lime accent to identify
+ * the protected domain information.
+ */
+
+.domain-badge {
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    color: var(--lime);
+    background: rgba(163, 230, 53, 0.1);
+
+    font-size: 9px;
+    letter-spacing: 0.7px;
+}
+
+/**
+ * Protected domain value layout.
+ *
+ * Aligns the domain icon and domain name
+ * horizontally with consistent spacing.
+ */
+
+.domain-value {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-top: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/**
+ * Domain icon styling.
+ *
+ * Uses the lime accent color.
+ */
+
+.domain-icon {
+    color: var(--lime);
+    font-size: 19px;
+}
+
+/**
+ * Standardizes SVG dimensions inside
+ * the domain icon container.
+ */
+
+.domain-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+/**
+ * Additional domain information.
+ */
+
+.domain-card p {
+    margin-top: 7px;
+
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* #endregion */
+
+/* #region Icons */
+
+/**
+ * Standard shield icon dimensions and color.
+ *
+ * Used to visually represent the extension's
+ * protection functionality.
+ */
+
+.shield-icon {
+    width: 26px;
+    height: 26px;
+
+    color: var(--lime);
+}
+
+/**
+ * Changes the shield icon to red when
+ * the protection status is inactive.
+ */
+
+.status-card.inactive .shield-icon {
+    color: var(--red);
+}
+
+/* #endregion */
+
+/* #region Footer */
+
+/**
+ * Footer layout.
+ *
+ * Positions footer information horizontally
+ * and separates it from the main content
+ * using a subtle top border.
+ */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 22px;
+    padding-top: 13px;
+
+    border-top: 1px solid var(--border);
+
+    color: #66715f;
+    font-size: 10px;
+}
+
+/* #endregion */
+
+/* #region Accessibility */
+
+/**
+ * Provides visible focus spacing for
+ * interactive buttons and input elements.
+ *
+ * Helps prevent focus outlines from
+ * overlapping nearby interface elements.
+ */
+
+button:focus-visible,
+input:focus-visible {
+    outline-offset: 3px;
+}
+
+/* #endregion */

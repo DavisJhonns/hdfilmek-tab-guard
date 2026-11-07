@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- #region Document Head -->
+
+<head>
+    <!-- Character encoding and responsive viewport configuration. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Sets the browser interface theme color for supported environments. -->
+    <meta name="theme-color" content="#080a08">
+
+    <!-- Extension popup title. -->
+    <title>HDFilmek Guard</title>
+
+    <!-- Loads the popup stylesheet. -->
+    <link rel="stylesheet" href="popup.css">
+
+    <!-- Loads the popup JavaScript after the HTML has been parsed. -->
+    <script src="popup.js" defer></script>
+</head>
+
+<!-- #endregion -->
+
+<body>
+
+    <!-- #region Main Container -->
+
+    <!--
+        Main popup container.
+
+        Groups all interface components into a single
+        layout and provides consistent spacing through CSS.
+    -->
+    <main class="container">
+
+        <!-- #region Header -->
+
+        <!--
+            Extension branding section.
+
+            Contains the extension logo, name,
+            description, and version information.
+        -->
+        <header class="header">
+
+            <!-- Groups the logo and branding text. -->
+            <div class="brand">
+
+                <!-- Extension shield logo. -->
+                <div class="brand-icon">
+
+                    <!--
+                        Inline SVG shield icon.
+
+                        Represents the extension's protection functionality.
+                        aria-hidden prevents decorative SVG content
+                        from being announced by screen readers.
+                    -->
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <!-- Shield outline. -->
+                        <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
+
+                        <!-- Confirmation checkmark. -->
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+
+                </div>
+
+                <!-- Extension name and subtitle. -->
+                <div class="brand-text">
+
+                    <!-- Main extension title. -->
+                    <h1>HDFilmek Guard</h1>
+
+                    <!-- Short description of the extension. -->
+                    <span>Browser Protection</span>
+
+                </div>
+
+            </div>
+
+            <!-- Displays the currently installed extension version. -->
+            <span class="version">v2.1.0</span>
+
+        </header>
+
+        <!-- #endregion -->
+
+        <!-- #region Protection Status -->
+
+        <!--
+            Displays the current protection state.
+
+            statusCard:
+                Main status container, updated through JavaScript.
+
+            aria-live="polite":
+                Announces status changes without interrupting
+                the user's current screen reader activity.
+
+            aria-atomic="true":
+                Requests that the entire status region
+                be announced when its content changes.
+        -->
+        <section
+            class="status-card"
+            id="statusCard"
+            aria-live="polite"
+            aria-atomic="true"
+        >
+
+            <!-- Status label and visual indicator. -->
+            <div class="status-indicator">
+
+                <!--
+                    Circular status indicator.
+
+                    Its appearance is controlled through CSS
+                    according to the current protection state.
+                -->
+                <span
+                    class="status-dot"
+                    id="statusDot"
+                    aria-hidden="true"
+                ></span>
+
+                <!--
+                    Short status description.
+
+                    Updated dynamically by popup.js.
+                -->
+                <span id="statusLabel">Checking status...</span>
+
+            </div>
+
+            <!-- Main protection status heading. -->
+            <h2 id="statusTitle">Initializing</h2>
+
+            <!-- Additional information about the current status. -->
+            <p id="statusDescription">
+                Retrieving protection status.
+            </p>
+
+        </section>
+
+        <!-- #endregion -->
+
+        <!-- #region Protection Settings -->
+
+        <!--
+            Main protection configuration section.
+
+            Contains settings directly related
+            to automatic browser tab protection.
+        -->
+        <section class="settings-section">
+
+            <!-- Section heading and descriptive caption. -->
+            <div class="section-heading">
+
+                <h3>Protection</h3>
+
+                <span class="section-caption">MAIN SETTINGS</span>
+
+            </div>
+
+            <!-- Tab protection setting. -->
+            <div class="setting-row">
+
+                <!-- Groups the setting icon and descriptive text. -->
+                <div class="setting-info">
+
+                    <!-- Protection shield icon container. -->
+                    <div class="setting-icon shield">
+
+                        <!--
+                            Inline SVG shield icon.
+
+                            Uses currentColor so its appearance
+                            follows the CSS protection theme.
+                        -->
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <!-- Shield outline. -->
+                            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
+
+                            <!-- Confirmation checkmark. -->
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+
+                    </div>
+
+                    <!-- Protection setting description. -->
+                    <div>
+
+                        <h4>Tab Protection</h4>
+
+                        <p>Automatically close unwanted tabs</p>
+
+                    </div>
+
+                </div>
+
+                <!--
+                    Protection toggle control.
+
+                    protectionToggle:
+                        Checkbox identifier used by popup.js.
+
+                    aria-label:
+                        Provides an accessible name for the
+                        toggle independently of its visual appearance.
+
+                    The adjacent slider element provides
+                    the custom switch appearance through CSS.
+                -->
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="protectionToggle"
+                        aria-label="Enable tab protection"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+        <!-- #endregion -->
+
+        <!-- #region General Settings -->
+
+        <!--
+            General extension preferences.
+
+            Contains configuration options that are
+            not directly related to tab protection.
+        -->
+        <section class="settings-section">
+
+            <!-- Section heading and descriptive caption. -->
+            <div class="section-heading">
+
+                <h3>General</h3>
+
+                <span class="section-caption">PREFERENCES</span>
+
+            </div>
+
+            <!-- Debug logging setting. -->
+            <div class="setting-row">
+
+                <!-- Groups the debug icon and descriptive text. -->
+                <div class="setting-info">
+
+                    <!-- Debug icon container. -->
+                    <div class="setting-icon debug">
+
+                        <!--
+                            Inline SVG diagnostic icon.
+
+                            Uses currentColor to inherit
+                            the purple debug accent from CSS.
+                        -->
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <!-- Icon stem. -->
+                            <path d="M12 3v3"/>
+
+                            <!-- Top connection. -->
+                            <path d="M8 6h8"/>
+
+                            <!-- Main diagnostic icon body. -->
+                            <rect x="6" y="7" width="12" height="13" rx="3"/>
+
+                            <!-- Internal diagnostic details. -->
+                            <path d="M9 11h6"/>
+                            <path d="M9 15h6"/>
+
+                            <!-- Left-side connections. -->
+                            <path d="M3 11h3"/>
+                            <path d="M3 17h3"/>
+
+                            <!-- Right-side connections. -->
+                            <path d="M18 11h3"/>
+                            <path d="M18 17h3"/>
+                        </svg>
+
+                    </div>
+
+                    <!-- Debug setting description. -->
+                    <div>
+
+                        <h4>Debug Logging</h4>
+
+                        <p>Show informational console messages</p>
+
+                    </div>
+
+                </div>
+
+                <!--
+                    Debug logging toggle.
+
+                    debugToggle:
+                        Checkbox identifier used by popup.js.
+
+                    debug-switch:
+                        Additional CSS class used to distinguish
+                        the debug toggle from the protection toggle.
+
+                    aria-label:
+                        Provides an accessible description
+                        for the checkbox.
+                -->
+                <label class="switch debug-switch">
+
+                    <input
+                        type="checkbox"
+                        id="debugToggle"
+                        aria-label="Enable debug logging"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+        <!-- #endregion -->
+
+        <!-- #region Protected Domain -->
+
+        <!--
+            Displays information about the domain
+            monitored by the extension.
+        -->
+        <section class="domain-card">
+
+            <!-- Domain heading and fixed configuration badge. -->
+            <div class="domain-header">
+
+                <span>Protected Domain</span>
+
+                <span class="domain-badge">FIXED</span>
+
+            </div>
+
+            <!-- Protected domain icon and value. -->
+            <div class="domain-value">
+
+                <!-- Decorative domain icon. -->
+                <span class="domain-icon">
+
+                    <!--
+                        Inline SVG globe icon.
+
+                        Represents the protected website domain.
+                        Hidden from screen readers because
+                        the domain text provides the information.
+                    -->
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <!-- Globe outline. -->
+                        <circle cx="12" cy="12" r="10"/>
+
+                        <!-- Horizontal globe line. -->
+                        <path d="M2 12h20"/>
+
+                        <!-- Vertical globe meridians. -->
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+
+                </span>
+
+                <!--
+                    Protected domain value.
+
+                    domainText:
+                        Identifier used by popup.js to display
+                        the configured domain dynamically.
+                -->
+                <span id="domainText">hdfilmek.net</span>
+
+            </div>
+
+            <!-- Clarifies that valid subdomains are also protected. -->
+            <p>All valid subdomains are included.</p>
+
+        </section>
+
+        <!-- #endregion -->
+
+        <!-- #region Footer -->
+
+        <!--
+            Extension footer.
+
+            Displays the extension name and
+            the Chrome extension manifest version.
+        -->
+        <footer class="footer">
+
+            <span>HDFilmek Guard</span>
+
+            <span>Manifest V3</span>
+
+        </footer>
+
+        <!-- #endregion -->
+
+    </main>
+
+    <!-- #endregion -->
+
+</body>
+</html>
