@@ -1,12 +1,31 @@
 {
     "manifest_version": 3,
     "name": "HDFilmek Tab Guard",
-    "version": "1.0.0",
+    "version": "2.1.0",
     "description": "Only allows HDFilmek tabs in windows containing HDFilmek.",
+
     "permissions": [
-        "tabs"
+        "tabs",
+        "storage"
     ],
+
     "background": {
         "service_worker": "background.js"
+    },
+
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "icon/shield-active.png",
+            "32": "icon/shield-active.png",
+            "48": "icon/shield-active.png"
+        }
+    },
+
+    "icons": {
+        "16": "icon/shield-active.png",
+        "32": "icon/shield-active.png",
+        "48": "icon/shield-active.png",
+        "128": "icon/shield-active.png"
     }
 }
