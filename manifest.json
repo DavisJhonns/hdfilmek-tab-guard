@@ -1,0 +1,12 @@
+{
+    "manifest_version": 3,
+    "name": "HDFilmek Tab Guard",
+    "version": "1.0.0",
+    "description": "Only allows HDFilmek tabs in windows containing HDFilmek.",
+    "permissions": [
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    }
+}
